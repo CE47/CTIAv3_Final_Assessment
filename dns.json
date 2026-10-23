@@ -1,0 +1,82 @@
+{
+  "index_patterns": [
+    "dns-*"
+  ],
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    },
+    "mappings": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "destination.ip": {
+          "type": "ip"
+        },
+        "destination.port": {
+          "type": "long"
+        },
+        "dns.answers": {
+          "type": "long"
+        },
+        "dns.question.name": {
+          "type": "keyword"
+        },
+        "dns.question.registered_domain": {
+          "type": "keyword"
+        },
+        "dns.question.subdomain": {
+          "type": "keyword"
+        },
+        "dns.question.type": {
+          "type": "keyword"
+        },
+        "dns.resolved_ip": {
+          "type": "ip"
+        },
+        "dns.response_code": {
+          "type": "keyword"
+        },
+        "event.code": {
+          "type": "long"
+        },
+        "host.ip": {
+          "type": "ip"
+        },
+        "host.name": {
+          "type": "keyword"
+        },
+        "message": {
+          "type": "text"
+        },
+        "network.protocol": {
+          "type": "keyword"
+        },
+        "network.transport": {
+          "type": "keyword"
+        },
+        "source.ip": {
+          "type": "ip"
+        },
+        "source.port": {
+          "type": "long"
+        },
+        "event.action": {
+          "type": "keyword"
+        },
+        "event.category": {
+          "type": "keyword"
+        },
+        "event.outcome": {
+          "type": "keyword"
+        },
+        "event.type": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}

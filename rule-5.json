@@ -1,0 +1,27 @@
+{
+  "name": "High volume of TXT queries to a single registered domain",
+  "description": "Lab rule 5 of 5. Lab rule 5 of 5. The 365 day window is a lab-only concession, because this lab ships historical data. A production deployment of this rule would use a short window and would alert on the shape of the traffic rather than on one address. TXT records are used by certificate validation, SPF and DKIM, so there is a great deal of it in any estate, and that legitimate traffic is what this rule mostly reports. It also reports a data channel that is hidden inside one of the quietest protocols a network has. The signal is not the volume; it is the shape of the query label and the absence of an answer. max_signals is deliberately set above the number of TXT records in this lab, so the rule alerts on all of them on its first execution and has nothing left to alert on afterwards. A cap BELOW the match count makes a Kibana query rule keep minting new alerts on every execution until the backlog is drained, which is why this lab asserts a stable number rather than a minimum one. max_signals is 1000, above the 611 TXT records this lab ships, because Kibana 9.1 does not cap this rule's initial backfill: it alerts on every matching record on the first execution and then has nothing left to alert on. The count was measured over four consecutive minutes of rule executions and did not move.",
+  "type": "query",
+  "risk_score": 64,
+  "severity": "medium",
+  "tags": [
+    "ctia-lab",
+    "final-exam",
+    "dns",
+    "exfiltration",
+    "command-and-control"
+  ],
+  "enabled": true,
+  "interval": "1m",
+  "from": "now-365d",
+  "to": "now",
+  "index": [
+    "dns-*"
+  ],
+  "timeField": "@timestamp",
+  "query": "event.category: \"network\" and dns.question.type: \"TXT\"",
+  "language": "kuery",
+  "max_signals": 1000,
+  "actions": [],
+  "notify_when": "onActiveAlert"
+}

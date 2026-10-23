@@ -1,0 +1,26 @@
+{
+  "name": "Service account authenticated interactively",
+  "description": "Lab rule 4 of 5. The 365 day window is a lab-only concession, because this lab ships historical data. A production deployment of this rule would use a short window and would alert on the shape of the traffic rather than on one address. A service account is not a person and has no business holding an interactive console session. Some estates have local service accounts that legitimately do, which is exactly why this rule needs a human behind it rather than an automatic action.",
+  "type": "query",
+  "risk_score": 55,
+  "severity": "medium",
+  "tags": [
+    "ctia-lab",
+    "final-exam",
+    "authentication",
+    "account-misuse"
+  ],
+  "enabled": true,
+  "interval": "1m",
+  "from": "now-365d",
+  "to": "now",
+  "index": [
+    "auth-*"
+  ],
+  "timeField": "@timestamp",
+  "query": "event.code: 4624 and logon.type: \"2\" and user.name: svc-*",
+  "language": "kuery",
+  "max_signals": 100,
+  "actions": [],
+  "notify_when": "onActiveAlert"
+}

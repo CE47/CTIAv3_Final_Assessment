@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CTIA Final Examination &mdash; Northwind Industrial Systems</title>
+<style>
+
+:root{
+  --ink:#16181d; --ink2:#3d444f; --mute:#6b7480; --line:#dfe4ea; --line2:#eef1f5;
+  --bg:#f4f6f9; --card:#ffffff; --brand:#0b62d0; --brand-dk:#084a9e; --brand-pale:#e8f1fd;
+  --ok:#0d7a4f; --ok-bg:#e6f5ee; --warn:#9a5b00; --warn-bg:#fdf3e2; --stop:#a61b1b;
+  --stop-bg:#fdeaea; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+          "Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --r:8px; --sh:0 1px 2px rgba(16,24,40,.06),0 4px 14px rgba(16,24,40,.05);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans)}
+code,kbd{font-family:var(--mono);font-size:.92em}
+
+.top{position:sticky;top:0;z-index:50;background:#101823;color:#fff;
+     box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.topin{max-width:1120px;margin:0 auto;padding:10px 20px;display:flex;
+       align-items:center;gap:18px;flex-wrap:wrap}
+.brandblock{flex:0 0 auto}
+.top h1{margin:0;font-size:15px;font-weight:650;letter-spacing:.01em}
+.top .sub{color:#9fb0c6;font-size:12.5px}
+.prog{flex:1 1 220px;min-width:170px}
+.prog .track{height:5px;background:#23303f;border-radius:3px;overflow:hidden}
+.prog .fill{height:100%;width:0;background:linear-gradient(90deg,#3d8bfd,#6ee7b7);
+            transition:width .25s ease}
+.prog .lab{color:#9fb0c6;font-size:11.5px;margin-top:4px}
+.top .btns{display:flex;gap:8px;align-items:center;flex:0 0 auto}
+
+.btn{font:inherit;font-size:13.5px;font-weight:600;border-radius:6px;cursor:pointer;
+     border:1px solid transparent;padding:8px 14px;background:#1e2a38;color:#dbe6f2}
+.btn:hover{background:#27374a}
+.btn.export{background:linear-gradient(180deg,#12a06a,#0b7d51);border-color:#0b7d51;color:#fff;
+            padding:10px 18px;font-size:14px}
+.btn.export:hover{background:#0a6d46}
+.btn.export.done{background:#0b7d51}
+.btn.export span{display:block}
+.btn.export .sub{display:block;font-weight:400;font-size:11px;opacity:.85}
+
+.wrap{max-width:1120px;margin:0 auto;padding:22px 20px 90px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+      box-shadow:var(--sh);margin:0 0 18px;overflow:hidden}
+.card > h2{margin:0;padding:14px 20px;font-size:15px;font-weight:650;
+           border-bottom:1px solid var(--line2);background:#fbfcfe;
+           display:flex;align-items:baseline;gap:10px}
+.card > h2 .n{color:var(--mute);font-weight:500;font-size:13px}
+.card .bd{padding:18px 20px}
+.card .bd > :first-child{margin-top:0}
+.card .bd > :last-child{margin-bottom:0}
+
+.brief h3{margin:24px 0 8px;font-size:14.5px;font-weight:650;color:var(--ink)}
+.brief h3:first-child{margin-top:0}
+.brief p{margin:0 0 12px;color:var(--ink2)}
+.brief ul,.brief ol{margin:0 0 12px;padding-left:22px;color:var(--ink2)}
+.brief li{margin:0 0 6px}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 14px;
+          border:1px solid var(--line);border-radius:6px}
+.scroller table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px}
+.scroller th{background:#f7f9fc;text-align:left;font-weight:600;color:var(--ink2);
+             padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.scroller td{padding:7px 12px;border-bottom:1px solid var(--line2);color:var(--ink2);
+             vertical-align:top}
+.scroller tr:last-child td{border-bottom:0}
+.scroller td code{white-space:nowrap;background:#f2f5f9;padding:1px 5px;border-radius:3px;
+                   color:var(--ink)}
+
+.co{border-left:3px solid var(--brand);background:var(--brand-pale);
+    padding:11px 14px;border-radius:0 6px 6px 0;margin:0 0 14px}
+.co.warn{border-color:var(--warn);background:var(--warn-bg)}
+.co.stop{border-color:var(--stop);background:var(--stop-bg)}
+.co.ok{border-color:var(--ok);background:var(--ok-bg)}
+.co .h{display:block;font-weight:650;margin-bottom:3px}
+.co p{margin:0;color:var(--ink2)}
+.co ol,.co ul{margin:6px 0 0;padding-left:20px}
+
+.ident{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.f label{display:block;font-size:12px;font-weight:650;color:var(--mute);
+         text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+input[type=text],select,textarea{width:100%;font:inherit;font-size:14px;color:var(--ink);
+  background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);
+  outline-offset:-1px;border-color:var(--brand)}
+textarea.ans{min-height:92px;line-height:1.55;resize:vertical;
+             font-family:var(--mono);font-size:13px}
+.fill{font-size:13px;color:var(--mute);margin:0 0 7px}
+.tpl{border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:0 0 14px;
+     background:#fcfdfe}
+.tpl h4{margin:0 0 2px;font-size:13px;font-weight:650;color:var(--brand-dk)}
+.count{font-size:12px;color:var(--mute);margin:5px 0 0}
+
+table.ans{border-collapse:collapse;width:100%;font-size:13.5px;table-layout:fixed}
+table.ans th{background:#f7f9fc;text-align:left;font-weight:600;color:var(--ink2);
+             padding:7px 10px;border:1px solid var(--line);font-size:12.5px}
+table.ans td{padding:5px 6px;border:1px solid var(--line2);vertical-align:top}
+table.ans td.n{color:var(--mute);font-weight:650;width:34px;text-align:center;
+               background:#fbfcfe;font-size:12px}
+table.ans td.lbl{background:#fbfcfe;color:var(--ink2);font-weight:600;font-size:12.5px}
+table.ans td.lbl small{display:block;font-weight:400;color:var(--mute);font-size:11.5px;
+                       margin-top:2px}
+table.ans th small{display:block;font-weight:400;color:var(--mute);font-size:11px;
+                   margin-top:2px;white-space:normal}
+table.ans input,table.ans textarea,table.ans select{font-size:13px;padding:6px 8px}
+table.ans textarea{font-family:var(--mono);font-size:12.5px;min-height:56px}
+
+.note{font-size:12.5px;color:var(--mute);margin:6px 0 0}
+.hintbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
+.bar{border:1px dashed var(--line);background:#fbfcfe;border-radius:6px;padding:9px 13px;
+     font-size:13px;color:var(--ink2);margin:0 0 14px}
+.bar b{color:var(--ink)}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(16px);
+       background:#101823;color:#fff;padding:10px 18px;border-radius:8px;font-size:13.5px;
+       opacity:0;pointer-events:none;transition:.22s;z-index:80;box-shadow:var(--sh)}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.foot{max-width:1120px;margin:0 auto;padding:0 20px 40px;color:var(--mute);font-size:12.5px}
+.subhead{font-size:13.5px;margin:18px 0 6px;color:var(--ink)}
+
+@media (max-width:860px){
+  .prog{order:3;flex:1 1 100%}
+  .top .btns{flex:1 1 auto;justify-content:flex-end}
+}
+@media (max-width:640px){
+  .topin{padding:9px 14px;gap:10px}
+  .wrap{padding:16px 12px 80px}
+  .card .bd{padding:14px}
+  table.ans{table-layout:auto}
+  table.ans th,table.ans td{font-size:12.5px;padding:4px 5px}
+  .scroller table{min-width:480px}
+}
+
+@media print{
+  .top,#toast,.hintbar,.bar,.count{display:none !important}
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  .card{break-inside:auto;page-break-inside:auto;border:0;box-shadow:none;margin:0 0 10pt}
+  .card > h2{background:none;border-bottom:1.5pt solid #000;padding:6pt 0}
+  .scroller{overflow:visible;border:0}
+  .scroller table{min-width:0;font-size:9pt}
+  table.ans{font-size:9pt}
+  table.ans input,table.ans textarea,table.ans select{
+    border:0;padding:1pt 2pt;background:transparent}
+  textarea.ans{min-height:0;height:auto;overflow:visible}
+  .co{break-inside:avoid}
+  .foot{padding:0}
+}
+
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="topin">
+    <div class="brandblock">
+      <h1>CTIA Final Examination</h1>
+      <div class="sub">Northwind Industrial Systems &middot; unaided investigation</div>
+    </div>
+    <div class="prog">
+      <div class="track"><div class="fill" id="pbar"></div></div>
+      <div class="lab" id="plab">0 fields answered</div>
+    </div>
+    <div class="btns">
+      <button class="btn" type="button" data-grow="off">expand all long answers</button>
+      <button class="btn export" type="button" data-export-pdf>
+        <span>EXPORT MY SUBMISSION</span>
+        <span class="sub">PDF file &middot; saved to your Downloads</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="card brief">
+  <div class="bd">
+    <h2>Examination paper and submission form</h2>
+
+    <div class="co">
+      <span class="h">Read this before you touch Kibana.</span>
+      <p>You are the analyst on duty at Northwind Industrial Systems. Telemetry from
+      the estate, the backup platform and the cloud tenant has been shipped into a
+      local Elastic stack and loaded for you. Find out what happened, rule out what
+      did not, and hand in the form at the bottom of this page.</p>
+    </div>
+
+    <div class="co warn">
+      <span class="h">There is no walkthrough and no reference sheet.</span>
+      <p>Unlike the practice labs, nothing here tells you which queries to run, in
+      what order, or what any of them should return. Choosing what to run is the
+      examination. Every figure you report must be one you found yourself.</p>
+    </div>
+
+    <h3>1 &middot; Where the data is</h3>
+    <p>Kibana is running at <code>http://localhost:5601</code>. Sign in with the
+    credentials the setup script printed. Four data views are available under
+    <b>Discover</b>:</p>
+    <div class="scroller"><table>
+      <tr><th>Data view</th><th>Index pattern</th><th>What it covers</th></tr>
+      <tr><td><code>auth</code></td><td><code>auth-*</code></td>
+          <td>Windows security events collected from every machine in the estate:
+              logons and failed logons, logoffs, privilege assignment, account
+              lockouts, process creations, Kerberos ticket requests,
+              directory-service access, credential caching, scheduled task creation</td></tr>
+      <tr><td><code>network</code></td><td><code>network-*</code></td>
+          <td>Connection records between hosts and toward external peers: SMB, RPC,
+              DNS, LDAP, Kerberos, HTTP and HTTPS, RDP, WinRM, SSH</td></tr>
+      <tr><td><code>dns</code></td><td><code>dns-*</code></td>
+          <td>Resolver queries made by estate hosts, with the question name, the
+              record type, the response code and the answer where there was one</td></tr>
+      <tr><td><code>cloud</code></td><td><code>cloud-*</code></td>
+          <td>Microsoft 365 unified audit: sign-ins, multi-factor challenges, OAuth
+              application consents, inbox rules, file downloads</td></tr>
+    </table></div>
+
+    <div class="co warn">
+      <span class="h">Set the time range before you count anything.</span>
+      <p>The telemetry in this lab runs from <b>2026-03-25</b> to <b>2026-09-30</b>.
+      A fresh Discover page opens on &ldquo;Last 15 minutes&rdquo; and will show you
+      nothing at all. Set the time range picker to the whole window first, and do
+      the same on <b>Security &rarr; Alerts</b>, or every count you take is
+      wrong.</p>
+    </div>
+
+    <div class="co warn">
+      <span class="h">Times are stored in UTC; Kibana prints them in your own
+      timezone.</span>
+      <p>Read the clock times off your own screen and judge <em>gaps between
+      events</em>, not absolute values. A timezone shift moves every time by the
+      same amount, so a conclusion built on intervals survives any timezone and one
+      built on a clock time may not.</p>
+    </div>
+
+    <div class="co stop">
+      <span class="h">One query-language note before you start.</span>
+      <p>This build of Elasticsearch does not accept the short
+      <code>field: ("a" or "b")</code> spelling in the KQL bar, and it has no
+      <code>[from TO]</code> date ranges in KQL either &mdash; write
+      <code>@timestamp &gt; "2026-03-25"</code> instead, and repeat the field on
+      each side of every <code>or</code>. Where a detection rule's own query is
+      shown to you on the Rules page it is written in the portable form, for
+      exactly that reason.</p>
+    </div>
+
+    <h3>2 &middot; The estate</h3>
+    <p>Northwind Industrial Systems is a mid-size industrial supplier, about 340
+    staff, one Active Directory forest (<code>NORTHWIND.LOCAL</code>). Asset
+    register:</p>
+    <h3>Servers</h3>
+    <div class="scroller"><table>
+      <tr><th>Host</th><th>Address</th><th>Role</th><th>Registered owner</th></tr>
+          <tr><td><code>NWS-DC-01</code></td><td><code>10.12.0.10</code></td><td>domain controller, FSMO, hosts the resolver</td><td>&mdash;</td></tr>
+          <tr><td><code>NWS-DC-02</code></td><td><code>10.12.0.11</code></td><td>domain controller, hosts the resolver</td><td>&mdash;</td></tr>
+          <tr><td><code>NWS-FS-01</code></td><td><code>10.12.0.20</code></td><td>file server, engineering and finance shares</td><td>Platform</td></tr>
+          <tr><td><code>NWS-FS-02</code></td><td><code>10.12.0.21</code></td><td>file server, archive</td><td>Platform</td></tr>
+          <tr><td><code>NWS-SQL-01</code></td><td><code>10.12.0.30</code></td><td>SQL Server 2019, production</td><td>Data Platform</td></tr>
+          <tr><td><code>NWS-MON-01</code></td><td><code>10.12.0.35</code></td><td>infrastructure monitoring probe</td><td>Platform</td></tr>
+          <tr><td><code>NWS-WEB-01</code></td><td><code>10.12.0.40</code></td><td>intranet and customer portal</td><td>Platform</td></tr>
+          <tr><td><code>NWS-BKP-02</code></td><td><code>10.12.0.50</code></td><td>backup server, runs the nightly replication job</td><td>Platform</td></tr>
+          <tr><td><code>NWS-VPN-01</code></td><td><code>10.12.0.60</code></td><td>VPN concentrator</td><td>Network</td></tr>
+          <tr><td><code>NWS-JMP-01</code></td><td><code>10.12.0.70</code></td><td>IT administrative jump box</td><td>IT</td></tr>
+          <tr><td><code>NWS-MAIL-01</code></td><td><code>10.12.0.80</code></td><td>Exchange 2019</td><td>Messaging</td></tr>
+    </table></div>
+    <h3>Workstations</h3>
+    <div class="scroller"><table>
+      <tr><th>Host</th><th>Address</th><th>Assigned to</th><th>Function</th></tr>
+          <tr><td><code>NWS-WS-014</code></td><td><code>10.12.10.14</code></td><td>dnavarro</td><td>Design</td></tr>
+          <tr><td><code>NWS-WS-032</code></td><td><code>10.12.10.32</code></td><td>jokafor</td><td>Finance</td></tr>
+          <tr><td><code>NWS-WS-057</code></td><td><code>10.12.10.57</code></td><td>swilliams</td><td>Facilities / building management</td></tr>
+          <tr><td><code>NWS-WS-071</code></td><td><code>10.12.10.71</code></td><td>jmendoza</td><td>Logistics</td></tr>
+          <tr><td><code>NWS-WS-088</code></td><td><code>10.12.10.88</code></td><td>tadano</td><td>Engineering</td></tr>
+          <tr><td><code>NWS-WS-103</code></td><td><code>10.12.10.103</code></td><td>mreyes</td><td>Human resources</td></tr>
+          <tr><td><code>NWS-WS-122</code></td><td><code>10.12.10.122</code></td><td>jdelacruz</td><td>contractor, Engineering</td></tr>
+          <tr><td><code>NWS-WS-129</code></td><td><code>10.12.10.129</code></td><td>lantipa</td><td>Sales</td></tr>
+          <tr><td><code>NWS-WS-136</code></td><td><code>10.12.10.136</code></td><td>rpatel</td><td>Engineering</td></tr>
+          <tr><td><code>NWS-WS-142</code></td><td><code>10.12.10.142</code></td><td>bbautista</td><td>Executive</td></tr>
+          <tr><td><code>NWS-WS-157</code></td><td><code>10.12.10.157</code></td><td>cvillanueva</td><td>Finance manager</td></tr>
+          <tr><td><code>NWS-WS-158</code></td><td><code>10.12.10.158</code></td><td>pserrano</td><td>Engineering</td></tr>
+          <tr><td><code>NWS-WS-174</code></td><td><code>10.12.10.174</code></td><td>mquispe</td><td>Sales</td></tr>
+          <tr><td><code>NWS-WS-181</code></td><td><code>10.12.10.181</code></td><td>gdelacruz</td><td>Engineering</td></tr>
+          <tr><td><code>NWS-WS-191</code></td><td><code>10.12.10.191</code></td><td>aluna</td><td>Executive assistant</td></tr>
+          <tr><td><code>NWS-WS-204</code></td><td><code>10.12.10.204</code></td><td>rcordero</td><td>Engineering</td></tr>
+          <tr><td><code>NWS-WS-205</code></td><td><code>10.12.10.205</code></td><td>hocampo</td><td>Engineering</td></tr>
+          <tr><td><code>NWS-WS-213</code></td><td><code>10.12.10.213</code></td><td>kdizon</td><td>Design</td></tr>
+          <tr><td><code>NWS-WS-229</code></td><td><code>10.12.10.229</code></td><td>esantos</td><td>Human resources</td></tr>
+          <tr><td><code>NWS-WS-246</code></td><td><code>10.12.10.246</code></td><td>lmerced</td><td>Logistics</td></tr>
+    </table></div>
+    <h3>Service accounts</h3>
+    <div class="scroller"><table>
+      <tr><th>Account</th><th>What it is for</th><th>Where it normally runs from</th></tr>
+          <tr><td><code>svc-backup</code></td><td>the nightly backup and directory replication job</td><td>NWS-BKP-02, 10.12.0.50</td></tr>
+          <tr><td><code>svc-sqlsvc</code></td><td>a <em>local</em> SQL service account installed on every SQL host; interactive by design</td><td>the SQL host itself</td></tr>
+          <tr><td><code>svc-scan</code></td><td>antivirus engine, per workstation</td><td>the host it protects</td></tr>
+          <tr><td><code>svc-iis</code></td><td>the web application pool identity</td><td>NWS-WEB-01</td></tr>
+          <tr><td><code>svc-smtp</code></td><td>Exchange transport</td><td>NWS-MAIL-01</td></tr>
+          <tr><td><code>svc-adsync</code></td><td>directory synchronisation</td><td>the domain controllers</td></tr>
+          <tr><td><code>svc-print</code></td><td>print spooler</td><td>print hosts</td></tr>
+    </table></div>
+    <p class="note">Contractor laptops sit on <code>192.0.2.0/24</code> and reach
+    the estate over the VPN pool <code>10.12.60.0/24</code>.</p>
+
+    <h3>3 &middot; Change calendar and offboarding register</h3>
+    <p>Recorded activity for the period. This is the reference material you are
+    entitled to; use it.</p>
+    <div class="scroller"><table>
+      <tr><th>Reference</th><th>Window (UTC)</th><th>What was approved</th></tr>
+      <tr><td><code>CHG-2026-0512</code></td><td>2026-05-11, 02:00 &rarr; 04:00</td>
+          <td>backup platform upgrade, <code>Platform</code>. The nightly job
+              window is moved from 23:00 to 02:00&ndash;04:00 for the rest of the
+              month.</td></tr>
+      <tr><td><code>CHG-2026-0610</code></td><td>2026-06-09 &rarr; 2026-06-13</td>
+          <td>authorised external vulnerability assessment by <b>Northbridge
+              Security</b>, engagement NB-2026-114. Source range
+              <code>192.0.2.201</code>, jumping from <code>NWS-JMP-01</code>
+              (<code>10.12.0.70</code>), service account <code>abautista</code>.
+              Scope covers external and internal credential assessment.</td></tr>
+      <tr><td><code>CHG-2026-0731</code></td><td>2026-07-31, 01:00 &rarr; 09:00</td>
+          <td>archive migration <code>NWS-FS-01</code> &rarr;
+              <code>NWS-FS-02</code>, approved by <code>fmercado</code>.</td></tr>
+    </table></div>
+    <div class="scroller"><table>
+      <tr><th>Person</th><th>Note</th></tr>
+      <tr><td><code>abautista</code></td><td>Network Engineering. Left the business
+          <b>2026-04-24</b>. AD account disabled 2026-04-25, mailbox converted to a
+          shared mailbox, assets reassigned to <code>ccruz</code>.</td></tr>
+      <tr><td><code>delloso</code></td><td>Security Operations. Transferred out
+          <b>2026-06-12</b>. AD account disabled the same day.</td></tr>
+      <tr><td><code>jdelacruz</code></td><td>Contractor, Engineering. Engagement
+          ended <b>2026-04-15</b>. Badge deactivated 2026-04-16, ticket
+          <code>IT-88214</code> closed, asset reassigned. <b>Account disablement:
+          still pending</b> &mdash; the change was never raised.</td></tr>
+      <tr><td><code>dfoley</code></td><td>Finance. HR case
+          <code>HR-2026-0912</code> opened 2026-09-22 and <b>closed 2026-09-29 as a
+          policy matter</b>, not a security incident. No further action is expected
+          on it.</td></tr>
+    </table></div>
+
+    <h3>4 &middot; The detection rules</h3>
+    <p>Five rules are installed and visible under <b>Security &rarr; Rules</b>; their
+    alerts are on <b>Security &rarr; Alerts</b>. Read each rule's query, severity and
+    risk score. Several of them are there to be reasoned about rather than obeyed,
+    and your answer must say, rule by rule, whether it would have caught this and
+    why.</p>
+
+    <div class="co ok">
+      <span class="h">How you are marked</span>
+      <p>Marks are for evidence, ordering and exclusions, not for naming a
+      technique. A report that names three techniques correctly and dates nothing
+      scores below one that names none and dates everything. Equally, a report that
+      opens on the Alerts page and reports whatever fired there scores very low,
+      and a confident answer to something these logs cannot show is marked
+      wrong.</p>
+    </div>
+
+    <div class="co">
+      <span class="h">Your work is saved as you type</span>
+      <p>This page keeps a local draft in your browser, so a closed tab does not
+      cost you the paper. Nothing is sent anywhere: the submission is the PDF you
+      export at the end.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Candidate <span class="n">fill this in first</span></h2>
+  <div class="bd">
+    <div class="ident">
+      <div class="f"><label for="repName">Your name</label>
+        <input id="repName" type="text" autocomplete="name" spellcheck="false"
+               data-k="name" placeholder="e.g. Juan Dela Cruz"></div>
+      <div class="f"><label for="repBatch">Batch number</label>
+        <input id="repBatch" type="text" autocomplete="off" spellcheck="false"
+               data-k="batch" placeholder="e.g. CTIA-2026-01"></div>
+      <div class="f"><label for="repStart">Started</label>
+        <input id="repStart" type="text" autocomplete="off" spellcheck="false"
+               data-k="start" placeholder="2026-10-14 08:00"></div>
+      <div class="f"><label for="repEnd">Finished</label>
+        <input id="repEnd" type="text" autocomplete="off" spellcheck="false"
+               data-k="end" placeholder="2026-10-14 12:30"></div>
+      <div class="f"><label for="repHours">Hours worked</label>
+        <input id="repHours" type="text" autocomplete="off" spellcheck="false"
+               data-k="hours" placeholder="4.5"></div>
+    </div>
+    <p class="note">These go on the front of the exported PDF and into the file
+    name, so the submission is identifiable without you having to say who you are
+    in the report itself.</p>
+    <div class="bar" id="draftnote" hidden>A local draft from an earlier session was
+      restored into the fields below. <b>Press EXPORT MY SUBMISSION</b> when you are
+      finished; the draft is not the submission.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 1 &middot; Timeline <span class="n">oldest first, ten stages</span></h2>
+  <div class="bd">
+    <p class="fill">One row per stage of what happened, oldest first. Give the time
+    you read off your own screen, not a date you inferred.</p>
+    <div class="scroller"><table class="ans" id="tl">
+      <tr><th style="width:34px">#</th><th style="width:32%">When<small>date, clock time, and the field it came from</small></th>
+          <th>What happened</th></tr>
+      <tr><td class="n">1</td>
+        <td><input type="text" data-k="tl1w" placeholder="____"></td>
+        <td><input type="text" data-k="tl1a" placeholder="____"></td></tr>
+      <tr><td class="n">2</td>
+        <td><input type="text" data-k="tl2w" placeholder="____"></td>
+        <td><input type="text" data-k="tl2a" placeholder="____"></td></tr>
+      <tr><td class="n">3</td>
+        <td><input type="text" data-k="tl3w" placeholder="____"></td>
+        <td><input type="text" data-k="tl3a" placeholder="____"></td></tr>
+      <tr><td class="n">4</td>
+        <td><input type="text" data-k="tl4w" placeholder="____"></td>
+        <td><input type="text" data-k="tl4a" placeholder="____"></td></tr>
+      <tr><td class="n">5</td>
+        <td><input type="text" data-k="tl5w" placeholder="____"></td>
+        <td><input type="text" data-k="tl5a" placeholder="____"></td></tr>
+      <tr><td class="n">6</td>
+        <td><input type="text" data-k="tl6w" placeholder="____"></td>
+        <td><input type="text" data-k="tl6a" placeholder="____"></td></tr>
+      <tr><td class="n">7</td>
+        <td><input type="text" data-k="tl7w" placeholder="____"></td>
+        <td><input type="text" data-k="tl7a" placeholder="____"></td></tr>
+      <tr><td class="n">8</td>
+        <td><input type="text" data-k="tl8w" placeholder="____"></td>
+        <td><input type="text" data-k="tl8a" placeholder="____"></td></tr>
+      <tr><td class="n">9</td>
+        <td><input type="text" data-k="tl9w" placeholder="____"></td>
+        <td><input type="text" data-k="tl9a" placeholder="____"></td></tr>
+      <tr><td class="n">10</td>
+        <td><input type="text" data-k="tl10w" placeholder="____"></td>
+        <td><input type="text" data-k="tl10a" placeholder="____"></td></tr>
+    </table></div>
+    <div class="tpl">
+      <h4>Anything the timeline cannot carry</h4>
+      <p class="fill">Gaps, periods you are unsure about, and anything you believe
+      you found that does not fit the sequence above.</p>
+      <textarea class="ans" id="tlNote" data-k="tlnote" rows="4"
+                placeholder="Type here."></textarea>
+      <p class="count"></p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 2 &middot; Evidence <span class="n">query, number, conclusion</span></h2>
+  <div class="bd">
+    <p class="fill">For each finding: the query you actually ran, the number it
+    returned, and what that number proved. The number matters as much as the
+    reasoning, including the numbers you ruled <em>out</em>. A query this build
+    rejected is still worth recording if you then rephrased it.</p>
+    <div class="scroller"><table class="ans" id="ev">
+      <tr><th style="width:34px">#</th><th style="width:22%">Finding</th>
+          <th style="width:24%">The query you ran</th>
+          <th style="width:12%">Result</th><th>What it proved</th></tr>
+      <tr><td class="n">1</td>
+        <td><input type="text" data-k="ev1a" placeholder="____"></td>
+        <td><input type="text" data-k="ev1b"></td>
+        <td><input type="text" data-k="ev1c"></td>
+        <td><input type="text" data-k="ev1d"></td></tr>
+      <tr><td class="n">2</td>
+        <td><input type="text" data-k="ev2a" placeholder="____"></td>
+        <td><input type="text" data-k="ev2b"></td>
+        <td><input type="text" data-k="ev2c"></td>
+        <td><input type="text" data-k="ev2d"></td></tr>
+      <tr><td class="n">3</td>
+        <td><input type="text" data-k="ev3a" placeholder="____"></td>
+        <td><input type="text" data-k="ev3b"></td>
+        <td><input type="text" data-k="ev3c"></td>
+        <td><input type="text" data-k="ev3d"></td></tr>
+      <tr><td class="n">4</td>
+        <td><input type="text" data-k="ev4a" placeholder="____"></td>
+        <td><input type="text" data-k="ev4b"></td>
+        <td><input type="text" data-k="ev4c"></td>
+        <td><input type="text" data-k="ev4d"></td></tr>
+      <tr><td class="n">5</td>
+        <td><input type="text" data-k="ev5a" placeholder="____"></td>
+        <td><input type="text" data-k="ev5b"></td>
+        <td><input type="text" data-k="ev5c"></td>
+        <td><input type="text" data-k="ev5d"></td></tr>
+      <tr><td class="n">6</td>
+        <td><input type="text" data-k="ev6a" placeholder="____"></td>
+        <td><input type="text" data-k="ev6b"></td>
+        <td><input type="text" data-k="ev6c"></td>
+        <td><input type="text" data-k="ev6d"></td></tr>
+      <tr><td class="n">7</td>
+        <td><input type="text" data-k="ev7a" placeholder="____"></td>
+        <td><input type="text" data-k="ev7b"></td>
+        <td><input type="text" data-k="ev7c"></td>
+        <td><input type="text" data-k="ev7d"></td></tr>
+      <tr><td class="n">8</td>
+        <td><input type="text" data-k="ev8a" placeholder="____"></td>
+        <td><input type="text" data-k="ev8b"></td>
+        <td><input type="text" data-k="ev8c"></td>
+        <td><input type="text" data-k="ev8d"></td></tr>
+    </table></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 3 &middot; Look-alikes
+      <span class="n">six of them, all in the data</span></h2>
+  <div class="bd">
+    <p class="fill">Each row is activity that will look alarming if you triage
+    quickly. For each: is it part of this incident or not, what single fact decided
+    it, and the query that proved it. A row answered &ldquo;benign&rdquo; with no
+    evidence is not an answer.</p>
+    <div class="scroller"><table class="ans" id="dc">
+      <tr><th style="width:26%">The activity</th><th style="width:14%">Part of it?</th>
+          <th style="width:32%">The fact that decided it</th><th>The query</th></tr>
+      <tr><td class="lbl">The 412 failed logons and the directory access requests in June<small>critical severity, from an internal jump box, the loudest thing on the Alerts page</small></td>
+        <td><input type="text" data-k="dc1a" placeholder="yes / no"></td>
+        <td><input type="text" data-k="dc1b"></td>
+        <td><input type="text" data-k="dc1c"></td></tr>
+      <tr><td class="lbl">A service account opening an interactive session on a SQL host in April and May<small>the same shape as a real finding later on</small></td>
+        <td><input type="text" data-k="dc2a" placeholder="yes / no"></td>
+        <td><input type="text" data-k="dc2b"></td>
+        <td><input type="text" data-k="dc2c"></td></tr>
+      <tr><td class="lbl">A backup account authenticating at 02:31 on 11 May<small>the wrong-looking hour, from the right-looking source</small></td>
+        <td><input type="text" data-k="dc3a" placeholder="yes / no"></td>
+        <td><input type="text" data-k="dc3b"></td>
+        <td><input type="text" data-k="dc3c"></td></tr>
+      <tr><td class="lbl">The 18.4 GB file copy on 31 July<small>the largest internal transfer in the window</small></td>
+        <td><input type="text" data-k="dc4a" placeholder="yes / no"></td>
+        <td><input type="text" data-k="dc4b"></td>
+        <td><input type="text" data-k="dc4c"></td></tr>
+      <tr><td class="lbl">A staff member copying data to removable media in September<small>HR closed this one already</small></td>
+        <td><input type="text" data-k="dc5a" placeholder="yes / no"></td>
+        <td><input type="text" data-k="dc5b"></td>
+        <td><input type="text" data-k="dc5c"></td></tr>
+      <tr><td class="lbl">One contractor account signing in from four different external addresses<small>an engagement that is still live</small></td>
+        <td><input type="text" data-k="dc6a" placeholder="yes / no"></td>
+        <td><input type="text" data-k="dc6b"></td>
+        <td><input type="text" data-k="dc6c"></td></tr>
+    </table></div>
+    <div class="co warn">
+      <span class="h">One more thing that is not a look-alike but reads like one</span>
+      <p>Four people left the business during this window and two accounts were
+      left enabled afterwards. Decide for yourself whether either of those accounts
+      appears in the incident, and write the evidence down above or in Part
+      9.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 4 &middot; Attributed accounts and hosts</h2>
+  <div class="bd">
+    <p class="fill">Every account and every host you attribute to the intruder,
+    with the evidence that ties each one in. &ldquo;It looked odd&rdquo; is not
+    evidence.</p>
+    <p class="subhead">Accounts</p>
+    <div class="scroller"><table class="ans" id="ac">
+      <tr><th style="width:34px">#</th><th style="width:26%">Account</th>
+          <th style="width:34%">Why you attribute it</th>
+          <th>What it did, and when</th></tr>
+      <tr><td class="n">1</td>
+        <td><input type="text" data-k="ac1a" placeholder="____"></td>
+        <td><input type="text" data-k="ac1b"></td>
+        <td><input type="text" data-k="ac1c"></td></tr>
+      <tr><td class="n">2</td>
+        <td><input type="text" data-k="ac2a" placeholder="____"></td>
+        <td><input type="text" data-k="ac2b"></td>
+        <td><input type="text" data-k="ac2c"></td></tr>
+      <tr><td class="n">3</td>
+        <td><input type="text" data-k="ac3a" placeholder="____"></td>
+        <td><input type="text" data-k="ac3b"></td>
+        <td><input type="text" data-k="ac3c"></td></tr>
+      <tr><td class="n">4</td>
+        <td><input type="text" data-k="ac4a" placeholder="____"></td>
+        <td><input type="text" data-k="ac4b"></td>
+        <td><input type="text" data-k="ac4c"></td></tr>
+    </table></div>
+    <p class="subhead">Hosts and external addresses</p>
+    <div class="scroller"><table class="ans" id="ah">
+      <tr><th style="width:34px">#</th><th style="width:26%">Host or address</th>
+          <th style="width:34%">Why you attribute it</th>
+          <th>What happened on it, and when</th></tr>
+      <tr><td class="n">1</td>
+        <td><input type="text" data-k="ah1a" placeholder="____"></td>
+        <td><input type="text" data-k="ah1b"></td>
+        <td><input type="text" data-k="ah1c"></td></tr>
+      <tr><td class="n">2</td>
+        <td><input type="text" data-k="ah2a" placeholder="____"></td>
+        <td><input type="text" data-k="ah2b"></td>
+        <td><input type="text" data-k="ah2c"></td></tr>
+      <tr><td class="n">3</td>
+        <td><input type="text" data-k="ah3a" placeholder="____"></td>
+        <td><input type="text" data-k="ah3b"></td>
+        <td><input type="text" data-k="ah3c"></td></tr>
+      <tr><td class="n">4</td>
+        <td><input type="text" data-k="ah4a" placeholder="____"></td>
+        <td><input type="text" data-k="ah4b"></td>
+        <td><input type="text" data-k="ah4c"></td></tr>
+      <tr><td class="n">5</td>
+        <td><input type="text" data-k="ah5a" placeholder="____"></td>
+        <td><input type="text" data-k="ah5b"></td>
+        <td><input type="text" data-k="ah5c"></td></tr>
+      <tr><td class="n">6</td>
+        <td><input type="text" data-k="ah6a" placeholder="____"></td>
+        <td><input type="text" data-k="ah6b"></td>
+        <td><input type="text" data-k="ah6c"></td></tr>
+    </table></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 5 &middot; Impact</h2>
+  <div class="bd" id="im">
+    <div class="tpl">
+      <h4>What left the estate, and how much</h4>
+      <p class="fill">Be specific, and be honest about the limits. If you can bound
+      a volume, give the number and the query that produced it.</p>
+      <textarea class="ans" data-q="Data exfiltrated" data-k="im1" rows="5"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+    <div class="tpl">
+      <h4>What in the cloud tenant was touched</h4>
+      <p class="fill">Mailboxes, applications, files, and the permission that was
+      granted that should not have been.</p>
+      <textarea class="ans" data-q="Cloud tenant impact" data-k="im2" rows="5"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+    <div class="tpl">
+      <h4>Systems affected</h4>
+      <p class="fill">Which servers, which accounts, and what someone with this
+      access would have been able to reach next.</p>
+      <textarea class="ans" data-q="Systems affected" data-k="im3" rows="5"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+    <div class="tpl">
+      <h4>What you cannot say from these logs</h4>
+      <p class="fill">State it plainly. This part carries marks, and an
+      overconfident answer here loses them.</p>
+      <textarea class="ans" data-q="Limits of this evidence" data-k="im4" rows="5"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 6 &middot; Verdicts <span class="n">twelve statements</span></h2>
+  <div class="bd">
+    <div class="co stop">
+      <span class="h">Three of these twelve cannot be answered from the data.</span>
+      <p>Marking them TRUE or FALSE is worth fewer marks than leaving them. Marking
+      something FALSE that these logs genuinely cannot show is also wrong: the
+      correct answer to &ldquo;we cannot tell&rdquo; is to say so, and say
+      why.</p>
+    </div>
+    <div class="scroller"><table class="ans" id="vd">
+      <tr><th style="width:34px">#</th><th>Statement</th>
+          <th style="width:150px">Your answer</th>
+          <th style="width:30%">If NOT DETERMINABLE, why not</th></tr>
+      <tr><td class="n">1</td><td class="lbl">The first unauthorised authentication came from an address outside both 10.12.0.0/16 and 10.12.10.0/24.</td>
+        <td><select class="anssel" data-k="vd1a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd1b" placeholder="____"></td></tr>
+      <tr><td class="n">2</td><td class="lbl">The account used for entry had not authenticated successfully in the previous 30 days.</td>
+        <td><select class="anssel" data-k="vd2a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd2b" placeholder="____"></td></tr>
+      <tr><td class="n">3</td><td class="lbl">The intruder caused more than five failed logons.</td>
+        <td><select class="anssel" data-k="vd3a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd3b" placeholder="____"></td></tr>
+      <tr><td class="n">4</td><td class="lbl">The intranet activity in June 2026 was authorised.</td>
+        <td><select class="anssel" data-k="vd4a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd4b" placeholder="____"></td></tr>
+      <tr><td class="n">5</td><td class="lbl">The intrusion was contained by an internal team before any data left the estate.</td>
+        <td><select class="anssel" data-k="vd5a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd5b" placeholder="____"></td></tr>
+      <tr><td class="n">6</td><td class="lbl">The backup service account was used interactively from a server.</td>
+        <td><select class="anssel" data-k="vd6a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd6b" placeholder="____"></td></tr>
+      <tr><td class="n">7</td><td class="lbl">The collection of data began before the interactive logon.</td>
+        <td><select class="anssel" data-k="vd7a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd7b" placeholder="____"></td></tr>
+      <tr><td class="n">8</td><td class="lbl">Every service-ticket request in this window used AES encryption.</td>
+        <td><select class="anssel" data-k="vd8a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd8b" placeholder="____"></td></tr>
+      <tr><td class="n">9</td><td class="lbl">The DNS traffic can be shown to have carried the exfiltrated data.</td>
+        <td><select class="anssel" data-k="vd9a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd9b" placeholder="____"></td></tr>
+      <tr><td class="n">10</td><td class="lbl">The identity of the person who answered the multi-factor challenge can be established from these logs.</td>
+        <td><select class="anssel" data-k="vd10a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd10b" placeholder="____"></td></tr>
+      <tr><td class="n">11</td><td class="lbl">A shared mailbox was configured to forward mail outside the organisation.</td>
+        <td><select class="anssel" data-k="vd11a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd11b" placeholder="____"></td></tr>
+      <tr><td class="n">12</td><td class="lbl">The intruder's infrastructure is still in use after 2026-08-23.</td>
+        <td><select class="anssel" data-k="vd12a">
+          <option value="">choose</option><option>TRUE</option><option>FALSE</option><option>NOT DETERMINABLE</option></select></td>
+        <td><input type="text" data-k="vd12b" placeholder="____"></td></tr>
+    </table></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 7 &middot; Response plan</h2>
+  <div class="bd" id="rp">
+    <p class="fill">In the order you would actually carry it out. &ldquo;Reset the
+    password&rdquo; is not an action; &ldquo;reset it, revoke its sessions and
+    tokens, and review everything the account did afterwards&rdquo; is.</p>
+    <div class="tpl">
+      <h4>Contain &mdash; first hour</h4>
+      <textarea class="ans" data-q="Containment" data-k="rp1" rows="6"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+    <div class="tpl">
+      <h4>Eradicate &mdash; first week</h4>
+      <textarea class="ans" data-q="Eradication" data-k="rp2" rows="6"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+    <div class="tpl">
+      <h4>Recover</h4>
+      <textarea class="ans" data-q="Recovery" data-k="rp3" rows="4"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+    <div class="tpl">
+      <h4>The controls that failed</h4>
+      <p class="fill">Name each one specifically. &ldquo;Not enough
+      training&rdquo; is not one of them.</p>
+      <textarea class="ans" data-q="Controls that failed" data-k="rp4" rows="5"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 8 &middot; Detective coverage
+      <span class="n">one row per installed rule</span></h2>
+  <div class="bd" id="dcvn">
+    <p class="fill">For each of the five rules on the Rules page: would it have
+    caught this incident, why or why not, and what one change would make it useful.
+    A rule that fires loudly on the wrong thing and quietly on the right thing is
+    the failure this part is about.</p>
+    <div class="scroller"><table class="ans" id="dcv">
+      <tr><th style="width:34px">#</th><th style="width:28%">Rule name</th>
+          <th style="width:13%">Would it catch it?</th>
+          <th style="width:26%">Why</th><th>One change you would make</th></tr>
+      <tr><td class="n">1</td>
+        <td><input type="text" data-k="dv1a" placeholder="____"></td>
+        <td><input type="text" data-k="dv1b"></td>
+        <td><input type="text" data-k="dv1c"></td>
+        <td><input type="text" data-k="dv1d"></td></tr>
+      <tr><td class="n">2</td>
+        <td><input type="text" data-k="dv2a" placeholder="____"></td>
+        <td><input type="text" data-k="dv2b"></td>
+        <td><input type="text" data-k="dv2c"></td>
+        <td><input type="text" data-k="dv2d"></td></tr>
+      <tr><td class="n">3</td>
+        <td><input type="text" data-k="dv3a" placeholder="____"></td>
+        <td><input type="text" data-k="dv3b"></td>
+        <td><input type="text" data-k="dv3c"></td>
+        <td><input type="text" data-k="dv3d"></td></tr>
+      <tr><td class="n">4</td>
+        <td><input type="text" data-k="dv4a" placeholder="____"></td>
+        <td><input type="text" data-k="dv4b"></td>
+        <td><input type="text" data-k="dv4c"></td>
+        <td><input type="text" data-k="dv4d"></td></tr>
+      <tr><td class="n">5</td>
+        <td><input type="text" data-k="dv5a" placeholder="____"></td>
+        <td><input type="text" data-k="dv5b"></td>
+        <td><input type="text" data-k="dv5c"></td>
+        <td><input type="text" data-k="dv5d"></td></tr>
+    </table></div>
+    <div class="tpl">
+      <h4>A detection you would write from scratch</h4>
+      <p class="fill">One query, the estate it runs over, and where in the chain it
+      would have fired. Write it well enough that somebody could paste it into a
+      rule file tomorrow.</p>
+      <textarea class="ans" data-q="A new detection" data-k="dcvn" rows="6"
+                placeholder="Type here."></textarea><p class="count"></p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Part 9 &middot; Narrative <span class="n">600 to 900 words</span></h2>
+  <div class="bd">
+    <p class="fill">The whole investigation as one piece of writing, for someone who
+    has never seen the dataset. It is the part most likely to be read first, and the
+    part that shows whether you understood it. State your verdict in the first
+    paragraph and your confidence in it.</p>
+    <textarea class="ans" id="narrative" data-k="narr" rows="22"
+              placeholder="Type here."></textarea>
+    <p class="count" id="wordcount"></p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Export your submission</h2>
+  <div class="bd">
+    <div class="hintbar">
+      <button class="btn" type="button" data-grow="off">expand all long answers</button>
+    </div>
+    <p>The button builds the file for you out of what you typed: your details, then
+    every part in the order above, each field under the label you filled it in
+    against. Anything left blank is written in as
+    <code>[not answered]</code> rather than quietly dropped, so a hole cannot turn
+    into a tidy-looking submission. The PDF lands in your <b>Downloads</b> folder;
+    nothing is uploaded and no internet connection is needed.</p>
+    <div style="margin:14px 0">
+      <button class="btn export" type="button" data-export-pdf>
+        <span>EXPORT MY SUBMISSION</span>
+        <span class="sub">PDF file &middot; saved to your Downloads</span>
+      </button>
+    </div>
+    <div class="co ok">
+      <span class="h">Before you submit, check all of these</span>
+      <ul style="margin:6px 0 0">
+        <li>Your name and batch number are filled in.</li>
+        <li>Every field has something in it, and it is your own words.</li>
+        <li>Part 2's numbers and Part 1's dates agree with each other.</li>
+        <li>Your timeline is in order and every row carries a time.</li>
+        <li>Every look-alike in Part 3 has evidence, not just a verdict.</li>
+        <li>Your verdict appears in the first line of Part 9.</li>
+        <li>You have answered the three unanswerable statements in Part 6
+            honestly.</li>
+        <li>You have pressed <b>EXPORT MY SUBMISSION</b>, opened the PDF, and handed
+            in that file.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="foot">
+  CTIA final examination &middot; Northwind Industrial Systems &middot; scenario
+  <code>final_exam</code> &middot; telemetry 2026-03-25 to 2026-09-30 &middot; all
+  data in this lab is synthetic and deterministic.
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* Adobe's own metrics, in 1/1000 em, for chars 32..126 of Helvetica and
+     Helvetica-Bold. A PDF has no text box: nothing wraps itself, so a line that
+     runs past the margin is simply cut off at the page edge. These are what let
+     the line be broken before it gets there. */
+  var PW_REG = [
+    278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,
+    556,556,556,556,556,556,556,556,556,556,
+    278,278,584,584,584,556,1015,
+    667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,
+    778,722,667,611,722,667,944,667,667,611,
+    278,278,278,469,556,333,
+    556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,
+    556,333,500,278,556,500,722,500,500,500,
+    334,260,334,584
+  ];
+  var PW_BLD = [
+    278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,
+    556,556,556,556,556,556,556,556,556,556,
+    333,333,584,584,584,611,975,
+    722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,
+    778,722,667,611,722,667,944,667,667,611,
+    333,278,333,584,556,333,
+    556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,
+    611,389,556,333,611,556,778,556,556,500,
+    389,280,389,584
+  ];
+  function textWidth(str, size, bold){
+    var T = bold ? PW_BLD : PW_REG, w = 0, i, c;
+    for (i = 0; i < str.length; i++){
+      c = str.charCodeAt(i);
+      /* an unmeasured glyph is charged the average 500, which is within a few
+         percent for anything the reader is likely to type */
+      w += (c >= 32 && c <= 126) ? T[c - 32] : 500;
+    }
+    return w * size / 1000;
+  }
+  /* Wrap to a width, honouring the paragraph breaks the reader actually typed.
+     A single word too long for the line is chopped rather than allowed to run
+     off the page, which is what a long unbroken path or URL would otherwise do. */
+  function wrapLines(str, size, bold, maxW){
+    var out = [], lim = maxW * 0.98, paras = clean(str).split('\n');
+    for (var p = 0; p < paras.length; p++){
+      var words = paras[p].replace(/^\s+|\s+$/g, '').split(/\s+/);
+      var line = '', i, w, cut;
+      for (i = 0; i < words.length; i++){
+        w = words[i];
+        if (!w) continue;
+        if (!line) line = w;
+        else if (textWidth(line + ' ' + w, size, bold) <= lim) line += ' ' + w;
+        else { out.push(line); line = w; }
+        while (textWidth(line, size, bold) > lim){
+          cut = Math.max(1, Math.floor(2 * lim / size));
+          out.push(line.slice(0, cut));
+          line = line.slice(cut);
+        }
+      }
+      out.push(line);
+    }
+    return out;
+  }
+  /* Everything the reader typed goes through here first. A PDF string cannot
+     hold a raw newline or a control character without changing the file's own
+     structure, and a textarea can easily contain \r\n from a Windows paste. */
+  function clean(str){
+    return String(str == null ? '' : str)
+      .replace(/\r\n?/g, '\n')
+      .replace(/\t/g, '    ')
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, ' ');
+  }
+  /* WinAnsi is the encoding the base-14 fonts are read with, so the typographic
+     characters a reader may well type survive the trip; anything with no place
+     in it becomes a question mark rather than a corrupt file. Newlines and tabs
+     pass through as themselves: this also encodes the content stream, and the
+     line breaks between drawing operators are structural, not decoration. */
+  var WINANSI = {
+    '\u2018':0x91,'\u2019':0x92,'\u201C':0x93,'\u201D':0x94,'\u2013':0x96,'\u2014':0x97,
+    '\u2026':0x85,'\u2022':0x95,'\u00A0':0x20,'\u00B7':0xB7,'\u00D7':0xD7,'\u00A9':0xA9
+  };
+  function toWinAnsi(str){
+    var s = '', i, c, ch;
+    for (i = 0; i < str.length; i++){
+      ch = str.charAt(i);
+      c = str.charCodeAt(i);
+      if (WINANSI[ch] != null) s += String.fromCharCode(WINANSI[ch]);
+      else if ((c >= 32 && c <= 126) || (c >= 160 && c <= 255)) s += ch;
+      else if (c === 10 || c === 13) s += '\n';
+      else if (c === 9) s += ' ';
+      else s += '?';
+    }
+    return s;
+  }
+  function num(n){ return String(Math.round(n * 100) / 100); }
+  function esc(str){ return String(str).replace(/([\\()])/g, '\\$1'); }
+
+  function todayStamp(){
+    var d = new Date(), p = function(n){ return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate())
+         + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+
+  /* ---- the layout pass: blocks in, a PDF out ---- */
+  var PAGE_W = 595.28, PAGE_H = 841.89, MARGIN = 56;
+  var COL_INK = '0.11 0.13 0.16', COL_MUTE = '0.42 0.46 0.52',
+      COL_LINE = '0.85 0.88 0.92', COL_BRAND = '0.04 0.39 0.81',
+      COL_NAVY = '0.055 0.165 0.235', COL_PALE = '0.66 0.80 0.93';
+  function buildPdf(blocks, name){
+    var full = PAGE_W - MARGIN * 2, floor_ = MARGIN + 34;
+    var pages = [], ops = null, y = 0, i, b;
+
+    function openPage(){ ops = []; pages.push(ops); y = PAGE_H - MARGIN; }
+    /* Colours are set twice, as both fill and stroke, on every path. `rg` alone
+       is the textbook minimum for `f`, and `RG` alone for `S` -- but Apple's
+       renderer paints a filled path with the stroke colour, so a band that is
+       meant to be navy comes out black and a blue rule comes out black. Setting
+       both costs four bytes and is right everywhere. */
+    function ink(col){
+      ops.push(col + ' rg ' + col + ' RG');
+    }
+    function rect(x, yy, w, h, col){
+      ink(col);
+      ops.push(num(x) + ' ' + num(yy) + ' ' + num(w) + ' ' + num(h) + ' re f');
+    }
+    function ruleAt(x, yy, w, col, lw){
+      ink(col);
+      ops.push(num(lw) + ' w ' + num(x) + ' ' + num(yy) + ' m '
+             + num(x + w) + ' ' + num(yy) + ' l S');
+    }
+    function say(str, size, bold, x, yy, col){
+      ops.push('BT /' + (bold ? 'F2' : 'F1') + ' ' + num(size) + ' Tf ' + col + ' rg '
+             + '1 0 0 1 ' + num(x) + ' ' + num(yy) + ' Tm (' + esc(str) + ') Tj ET');
+    }
+    /* Guarantee n points of clear space below the pen, or start a fresh page.
+       It reserves nothing: the caller always moves the pen itself, so a line is
+       never counted twice. Asked before a heading is drawn rather than after, so
+       a heading is never left orphaned at the foot of a page. The second test
+       stops it breaking a page that is already empty, which would loop. */
+    function room(n){
+      if (y - n < floor_ && y < PAGE_H - MARGIN) openPage();
+    }
+    function flow(str, size, bold, x, lead, col, hang){
+      var lines = wrapLines(str, size, bold, full - (hang || 0)), k;
+      for (k = 0; k < lines.length; k++){
+        room(lead);
+        y -= lead;
+        say(lines[k], size, bold, x + (k ? (hang || 0) : 0), y, col);
+      }
+    }
+
+    openPage();
+    for (i = 0; i < blocks.length; i++){
+      b = blocks[i];
+      if (b.t === 'band'){
+        rect(MARGIN, PAGE_H - MARGIN - 56, full, 56, COL_NAVY);
+        say('Incident report', 20, true, MARGIN + 16, PAGE_H - MARGIN - 27, '1 1 1');
+        say(b.label, 9, false, MARGIN + 16, PAGE_H - MARGIN - 43, COL_PALE);
+        y = PAGE_H - MARGIN - 56;
+      } else if (b.t === 'h1'){
+        room(30);
+        y -= 22;
+        say(b.label, 12.5, true, MARGIN, y, COL_INK);
+        y -= 5;
+        ruleAt(MARGIN, y, full, COL_BRAND, 1.1);
+        y -= 8;
+      } else if (b.t === 'h2'){
+        room(22);
+        y -= 18;
+        say(b.label, 11, true, MARGIN, y, COL_BRAND);
+        y -= 5;
+      } else if (b.t === 'body'){
+        flow(b.value, 9.8, false, MARGIN, 13, COL_INK, 0);
+        y -= 5;
+      } else if (b.t === 'fig'){
+        /* the label in bold, the reader's own value after it, wrapped to the
+           width the label actually leaves over and hung at that same width, so
+           a long label cannot push the value off the edge of the paper */
+        var lab = b.label, val = b.value, j, labw, avail, fl;
+        while (lab.length > 8 && textWidth(lab + '  ', 9.8, true) > 150){
+          lab = lab.slice(0, -6).replace(/[\s,;:-]+$/, '') + '...';
+        }
+        labw = textWidth(lab + '  ', 9.8, true);
+        avail = Math.max(120, full - labw);
+        fl = wrapLines(val, 9.8, false, avail);
+        room(12.5);
+        y -= 12.5;
+        say(lab + '  ', 9.8, true, MARGIN, y, COL_MUTE);
+        say(fl[0], 9.8, false, MARGIN + labw, y,
+            val === '[not answered]' ? COL_MUTE : COL_INK);
+        for (j = 1; j < fl.length; j++){
+          room(12.5);
+          y -= 12.5;
+          say(fl[j], 9.8, false, MARGIN + labw, y, COL_INK);
+        }
+        y -= 2;
+      } else if (b.t === 'kv'){
+        room(16);
+        y -= 16;
+        say(b.label, 9, true, MARGIN, y, COL_MUTE);
+        say(b.value, 10.5, false, MARGIN + 112, y, COL_INK);
+      } else if (b.t === 'rule'){
+        room(20);
+        y -= 8;
+        ruleAt(MARGIN, y, full, COL_LINE, 0.7);
+
+        y -= 8;
+      }
+    }
+
+    /* the folio goes on last, now that the page count and the name are known */
+    for (i = 0; i < pages.length; i++){
+      ops = pages[i];
+      ruleAt(MARGIN, MARGIN + 4, full, COL_LINE, 0.5);
+      var f = 'CTIA Final Exam  -  ' + (name ? name : 'name not given')
+            + '  -  page ' + (i + 1) + ' of ' + pages.length;
+      say(f, 8, false, (PAGE_W - textWidth(f, 8, false)) / 2, MARGIN - 12, COL_MUTE);
+    }
+    return assemble(pages);
+  }
+
+  /* Objects, cross-reference table, trailer. Every offset is counted in bytes,
+     which is why the whole file is assembled from characters no wider than a
+     byte in the first place. */
+  function assemble(pages){
+    var objs = [null,
+      '<< /Type /Catalog /Pages 2 0 R >>',
+      '',
+      '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>',
+      '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'
+    ];
+    var kids = [], i, stream, cnum, pnum;
+    for (i = 0; i < pages.length; i++){
+      /* encoded here, once, on the way out. Encoding any earlier and the second
+         pass would meet its own output and turn every accented character and
+         curly quote back into a question mark. */
+      stream = toWinAnsi(pages[i].join('\n'));
+      cnum = objs.length;
+      objs.push('<< /Length ' + stream.length + ' >>\nstream\n' + stream + '\nendstream');
+      pnum = objs.length;
+      objs.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + num(PAGE_W) + ' '
+        + num(PAGE_H) + '] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> '
+        + '/Contents ' + cnum + ' 0 R >>');
+      kids.push(pnum + ' 0 R');
+    }
+    objs[2] = '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + kids.length + ' >>';
+
+    var pdf = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n', offs = [];
+    for (i = 1; i < objs.length; i++){
+      offs[i] = pdf.length;
+      pdf += i + ' 0 obj\n' + objs[i] + '\nendobj\n';
+    }
+    var xref = pdf.length;
+    pdf += 'xref\n0 ' + objs.length + '\n0000000000 65535 f \n';
+    for (i = 1; i < objs.length; i++){
+      pdf += ('0000000000' + offs[i]).slice(-10) + ' 00000 n \n';
+    }
+    pdf += 'trailer\n<< /Size ' + objs.length + ' /Root 1 0 R >>\nstartxref\n'
+         + xref + '\n%%EOF\n';
+
+    var bytes = new Uint8Array(pdf.length);
+    for (i = 0; i < pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 0xFF;
+    return new Blob([bytes], {type:'application/pdf'});
+  }
+  function saveBlob(blob, filename){
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = filename; a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){
+      if (a.parentNode) a.parentNode.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 4000);
+  }
+  function slug(str){
+    return (str || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '').slice(0, 40);
+  }
+  function refreshCounts(){
+    var boxes = [].slice.call(document.querySelectorAll('textarea.ans'));
+    var done = 0;
+    boxes.forEach(function(b){
+      var n = (b.value || '').trim().length;
+      if (n) done++;
+      var c = b.parentNode.querySelector('.count');
+      if (c) c.textContent = n ? (n + ' characters typed') : '';
+    });
+    var st = document.getElementById('repstat');
+    if (st) st.textContent = boxes.length
+      ? (done + ' of ' + boxes.length + ' sections answered')
+      : '';
+  }
+  document.addEventListener('input', function(e){
+    if (e.target && e.target.classList && e.target.classList.contains('ans')) refreshCounts();
+  });
+
+  function toast(msg){
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(t._h);
+    t._h = setTimeout(function(){ t.classList.remove('on'); }, 2600);
+  }
+
+  /* ---------- what goes on the paper ----------
+     One flat list of blocks built from whatever the candidate typed: a heading,
+     a paragraph, or a label/value figure.  The layout pass above is the only
+     thing that knows what any of those look like on paper, so adding a question
+     never means touching the PDF code. */
+  function reportBlocks(){
+    var B = [];
+    function add(t, label, value){ B.push({t: t, label: label, value: value}); }
+    /* Header rows carry no fields, so "has a field" is the reliable way to skip
+       them.  A label cell is not a field, so a row is read by its fields and its
+       label separately: indexing both as one list puts "undefined" on the page,
+       which is exactly what a marker notices first. */
+    function rowsOf(id){
+      return [].slice.call(document.querySelectorAll('#' + id + ' tr'))
+        .filter(function(r){ return r.querySelector('input, textarea, select'); });
+    }
+    function vals(r){
+      return [].slice.call(r.querySelectorAll('input, textarea, select'))
+        .map(function(e){ return (e.value || '').trim() || '-'; });
+    }
+    /* A label cell holds a short name and sometimes a <small> with the detail.
+       Only the name goes on the label line, because a long label on one line
+       runs past the page margin; the detail travels with the value. */
+    function labelOf(r){
+      var l = r.querySelector('td.lbl'), out = '', k;
+      if (!l) return '';
+      for (k = 0; k < l.childNodes.length; k++){
+        if (l.childNodes[k].nodeType === 3) out += l.childNodes[k].nodeValue;
+      }
+      return out.replace(/\s+/g, ' ').trim();
+    }
+    function noteOf(r){
+      var s = r.querySelector('td.lbl small');
+      return s ? s.textContent.replace(/\s+/g, ' ').trim() : '';
+    }
+    function f(id){
+      var el = document.getElementById(id);
+      return el ? (el.value || '').trim() : '';
+    }
+    function paras(sel, prefix){
+      [].slice.call(document.querySelectorAll(sel)).forEach(function(el){
+        add('h2', prefix + ' - ' + clean(el.getAttribute('data-q') || ''), '');
+        var v = (el.value || '').replace(/\s+$/, '');
+        add('body', '', v.trim() ? v : '[not answered]');
+      });
+    }
+    var name = f('repName'), batch = f('repBatch');
+    var i, v, rows;
+
+    add('band', 'CTIA final examination - an unaided incident investigation over six months', '');
+    add('h1', 'Submission details', '');
+    add('kv', 'Name', name || '[not answered]');
+    add('kv', 'Batch number', batch || '[not answered]');
+    add('kv', 'Scenario', 'final_exam');
+    add('kv', 'Started', f('repStart') || '[not answered]');
+    add('kv', 'Finished', f('repEnd') || '[not answered]');
+    add('kv', 'Hours worked', f('repHours') || '[not answered]');
+    add('kv', 'Date submitted', todayStamp());
+    add('rule', '', '');
+
+    add('h1', 'Part 1 - Timeline', '');
+    rows = rowsOf('tl');
+    for (i = 0; i < rows.length; i++){
+      v = vals(rows[i]);
+      add('fig', 'Stage ' + (i + 1) + ' - ' + v[0], v[1]);
+    }
+    add('h2', 'Candidate comment on the timeline', '');
+    add('body', '', f('tlNote') || '[not answered]');
+
+    add('h1', 'Part 2 - Evidence', '');
+    rows = rowsOf('ev');
+    for (i = 0; i < rows.length; i++){
+      v = vals(rows[i]);
+      add('fig', 'Finding ' + (i + 1) + ' - ' + v[0],
+          'query: ' + v[1] + '   |   result: ' + v[2] + '   |   proved: ' + v[3]);
+    }
+
+    add('h1', 'Part 3 - Look-alikes', '');
+    rows = rowsOf('dc');
+    for (i = 0; i < rows.length; i++){
+      v = vals(rows[i]);
+      add('fig', 'Look-alike ' + (i + 1) + ': ' + labelOf(rows[i]),
+          (noteOf(rows[i]) ? noteOf(rows[i]) + '   |   ' : '')
+          + 'verdict: ' + v[0] + '   |   deciding evidence: ' + v[1]
+          + '   |   query: ' + v[2]);
+    }
+
+    add('h1', 'Part 4 - Attributed accounts', '');
+    rows = rowsOf('ac');
+    for (i = 0; i < rows.length; i++){
+      v = vals(rows[i]);
+      add('fig', 'Account ' + (i + 1), v[0] + '   |   ' + v[1] + '   |   ' + v[2]);
+    }
+    add('h1', 'Part 4 - Attributed hosts and addresses', '');
+    rows = rowsOf('ah');
+    for (i = 0; i < rows.length; i++){
+      v = vals(rows[i]);
+      add('fig', 'Host ' + (i + 1), v[0] + '   |   ' + v[1] + '   |   ' + v[2]);
+    }
+
+    add('h1', 'Part 5 - Impact', '');
+    paras('#im textarea.ans', 'Part 5');
+
+    add('h1', 'Part 6 - Verdicts', '');
+    rows = rowsOf('vd');
+    for (i = 0; i < rows.length; i++){
+      v = vals(rows[i]);
+      add('fig', 'Statement ' + (i + 1) + ': ' + labelOf(rows[i]),
+          'answer: ' + v[0] + '   |   note: ' + v[1]);
+    }
+
+    add('h1', 'Part 7 - Response plan', '');
+    paras('#rp textarea.ans', 'Part 7');
+
+    add('h1', 'Part 8 - Detective coverage', '');
+    rows = rowsOf('dcv');
+    for (i = 0; i < rows.length; i++){
+      v = vals(rows[i]);
+      add('fig', 'Rule ' + (i + 1) + ': ' + v[0],
+          'caught it? ' + v[1] + '   |   why: ' + v[2] + '   |   change: ' + v[3]);
+    }
+    paras('#dcvn textarea.ans', 'Part 8');
+
+    add('h1', 'Part 9 - Narrative', '');
+    v = (f('narrative') || '').replace(/\s+$/, '');
+    add('body', '', v.trim() ? v : '[not answered]');
+    return B;
+  }
+
+  /* ---------- the export button ---------- */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('[data-export-pdf]') : null;
+    if (!b) return;
+    var f = function(id){
+      var el = document.getElementById(id);
+      return el ? (el.value || '').trim() : '';
+    };
+    var name = f('repName'), batch = f('repBatch');
+    var file = 'CTIA-final-exam-submission'
+      + (slug(name) ? '-' + slug(name) : '')
+      + (slug(batch) ? '-' + slug(batch) : '') + '.pdf';
+    /* built and handed over synchronously, inside the click that asked for it:
+       a download started from a timer gets quietly blocked by some browsers. */
+    saveBlob(buildPdf(reportBlocks(), name), file);
+    var gaps = countBlanks();
+    var l1 = b.firstChild, l2 = b.lastChild, o1 = l1.textContent, o2 = l2.textContent;
+    l1.textContent = 'PDF DOWNLOADED';
+    l2.textContent = gaps ? (gaps + ' fields still blank') : 'every field answered';
+    b.classList.add('done');
+    setTimeout(function(){
+      l1.textContent = o1; l2.textContent = o2; b.classList.remove('done');
+    }, 3600);
+    toast('Saved as ' + file);
+  });
+
+  /* ---------- keep the candidate's work ----------
+     A three hour examination typed into a browser is worth losing to a closed
+     tab.  Every keystroke is mirrored into localStorage and the form is restored
+     on the next open.  The key is versioned, so a draft from a different build
+     of this paper never silently reappears. */
+  var STORE = 'ctia-final-exam-v1';
+  function saveDraft(){
+    try {
+      var o = {};
+      [].slice.call(document.querySelectorAll('[data-k]')).forEach(function(el){
+        o[el.getAttribute('data-k')] = el.value;
+      });
+      localStorage.setItem(STORE, JSON.stringify(o));
+    } catch (err) { /* private browsing, quota: never break the exam over it */ }
+  }
+  function loadDraft(){
+    var o;
+    try { o = JSON.parse(localStorage.getItem(STORE) || '{}'); } catch (err) { return; }
+    [].slice.call(document.querySelectorAll('[data-k]')).forEach(function(el){
+      var k = el.getAttribute('data-k');
+      if (o[k] != null && el.value === '') el.value = o[k];
+    });
+    var bar = document.getElementById('draftnote');
+    if (bar && Object.keys(o).length) bar.hidden = false;
+  }
+  document.addEventListener('input', function(e){
+    if (e.target && e.target.getAttribute && e.target.getAttribute('data-k')) saveDraft();
+  });
+  document.addEventListener('change', function(e){
+    if (e.target && e.target.getAttribute && e.target.getAttribute('data-k')) saveDraft();
+  });
+
+  /* ---------- progress, so a long paper feels finite ---------- */
+  function countBlanks(){
+    var n = 0;
+    [].slice.call(document.querySelectorAll('[data-k]')).forEach(function(el){
+      if (el.tagName === 'SELECT') { if (!el.value) n++; }
+      else if (!(el.value || '').trim()) n++;
+    });
+    return n;
+  }
+  function progress(){
+    var all = [].slice.call(document.querySelectorAll('[data-k]'));
+    var done = all.length - countBlanks();
+    var bar = document.getElementById('pbar'), lab = document.getElementById('plab');
+    if (bar) bar.style.width = (all.length ? Math.round(done * 100 / all.length) : 0) + '%';
+    if (lab) lab.textContent = done + ' of ' + all.length + ' fields answered';
+    refreshCounts();
+    var nar = document.getElementById('narrative');
+    if (nar) wordCount(nar);
+  }
+  function wordCount(el){
+    var t = (el.value || '').trim();
+    var c = document.getElementById('wordcount');
+    if (c) c.textContent = t ? (t.split(/\s+/).length + ' words') : '';
+  }
+  document.addEventListener('input', progress);
+  document.addEventListener('change', progress);
+  window.addEventListener('beforeunload', function(){
+    if (countBlanks() > 0) saveDraft();
+  });
+  window.addEventListener('load', function(){ loadDraft(); progress(); });
+
+  /* expand / collapse every long-form box at once */
+  document.addEventListener('click', function(e){
+    var t = e.target.closest ? e.target.closest('[data-grow]') : null;
+    if (!t) return;
+    var grow = t.getAttribute('data-grow') !== 'on';
+    t.setAttribute('data-grow', grow ? 'on' : 'off');
+    [].slice.call(document.querySelectorAll('textarea.ans')).forEach(function(b){
+      b.style.height = grow ? '340px' : '';
+    });
+    t.textContent = grow ? 'collapse all long answers' : 'expand all long answers';
+  });
+
+})();
+</script>
+</body>
+</html>

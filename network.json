@@ -1,0 +1,70 @@
+{
+  "index_patterns": [
+    "network-*"
+  ],
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    },
+    "mappings": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "destination.ip": {
+          "type": "ip"
+        },
+        "destination.port": {
+          "type": "long"
+        },
+        "event.code": {
+          "type": "long"
+        },
+        "host.ip": {
+          "type": "ip"
+        },
+        "host.name": {
+          "type": "keyword"
+        },
+        "message": {
+          "type": "text"
+        },
+        "network.bytes": {
+          "type": "long"
+        },
+        "network.direction": {
+          "type": "keyword"
+        },
+        "network.protocol": {
+          "type": "keyword"
+        },
+        "network.transport": {
+          "type": "keyword"
+        },
+        "source.ip": {
+          "type": "ip"
+        },
+        "source.port": {
+          "type": "long"
+        },
+        "user.name": {
+          "type": "keyword"
+        },
+        "event.action": {
+          "type": "keyword"
+        },
+        "event.category": {
+          "type": "keyword"
+        },
+        "event.outcome": {
+          "type": "keyword"
+        },
+        "event.type": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}

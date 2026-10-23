@@ -1,0 +1,124 @@
+{
+  "index_patterns": [
+    "cloud-*"
+  ],
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    },
+    "mappings": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "client.application.name": {
+          "type": "keyword"
+        },
+        "client.ip": {
+          "type": "ip"
+        },
+        "cloud.provider": {
+          "type": "keyword"
+        },
+        "event.code": {
+          "type": "keyword"
+        },
+        "event.provider": {
+          "type": "keyword"
+        },
+        "file.name": {
+          "type": "keyword"
+        },
+        "file.path": {
+          "type": "keyword"
+        },
+        "file.size": {
+          "type": "long"
+        },
+        "mail.rule.action": {
+          "type": "keyword",
+          "ignore_above": 1024
+        },
+        "mail.rule.applied_count": {
+          "type": "long"
+        },
+        "mail.rule.condition": {
+          "type": "keyword",
+          "ignore_above": 1024
+        },
+        "mail.rule.name": {
+          "type": "keyword"
+        },
+        "message": {
+          "type": "text"
+        },
+        "mfa.challenge_id": {
+          "type": "keyword"
+        },
+        "mfa.device": {
+          "type": "keyword"
+        },
+        "mfa.method": {
+          "type": "keyword"
+        },
+        "mfa.status": {
+          "type": "keyword"
+        },
+        "oauth.application.client_id": {
+          "type": "keyword"
+        },
+        "oauth.application.name": {
+          "type": "keyword"
+        },
+        "oauth.scopes": {
+          "type": "keyword",
+          "ignore_above": 1024
+        },
+        "oauth.token_type": {
+          "type": "keyword"
+        },
+        "source.ip": {
+          "type": "ip"
+        },
+        "source.port": {
+          "type": "long"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "user.domain": {
+          "type": "keyword"
+        },
+        "user.id": {
+          "type": "keyword"
+        },
+        "user.name": {
+          "type": "keyword"
+        },
+        "user.target.name": {
+          "type": "keyword"
+        },
+        "user.target.type": {
+          "type": "keyword"
+        },
+        "user.type": {
+          "type": "keyword"
+        },
+        "event.action": {
+          "type": "keyword"
+        },
+        "event.category": {
+          "type": "keyword"
+        },
+        "event.outcome": {
+          "type": "keyword"
+        },
+        "event.type": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}

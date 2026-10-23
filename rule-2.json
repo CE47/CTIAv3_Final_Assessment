@@ -1,0 +1,26 @@
+{
+  "name": "Directory replication requested from a host that is not a domain controller or a backup server",
+  "description": "Lab rule 2 of 5. The 365 day window is a lab-only concession, because this lab ships historical data. A production deployment of this rule would use a short window and would alert on the shape of the traffic rather than on one address. The DS-Replication-Get-Changes family of extended rights lets a holder replicate the whole directory, which means every password hash in the domain. Requesting it from anything other than a domain controller or the backup platform is the finding. Note that this estate also performs a legitimate replication every single night; this rule is scoped so that the legitimate one does not match, and the job of the analyst is to work out why the alerts that do fire are or are not the real thing.",
+  "type": "query",
+  "risk_score": 90,
+  "severity": "critical",
+  "tags": [
+    "ctia-lab",
+    "final-exam",
+    "active-directory",
+    "credential-access"
+  ],
+  "enabled": true,
+  "interval": "1m",
+  "from": "now-365d",
+  "to": "now",
+  "index": [
+    "auth-*"
+  ],
+  "timeField": "@timestamp",
+  "query": "event.code: 4662 and winlog.event_data.ObjectType: \"{1131f6ad-9c07-11d1-f79f-00c04fc2dcd2}\" and source.ip: \"10.12.0.70\"",
+  "language": "kuery",
+  "max_signals": 100,
+  "actions": [],
+  "notify_when": "onActiveAlert"
+}
